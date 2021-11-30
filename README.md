@@ -1,10 +1,13 @@
 # Sentry react lazy
 
-This package create a `<script>` that loads the sentry CDN, initialize the service and share the SDK around the whole application using the [React Context API](https://reactjs.org/docs/context.html).
+This package create a `<script>` that loads the sentry CDN,
+initialize the service and share the SDK around the whole application using the [React Context API](https://reactjs.org/docs/context.html).
 
 ## Goal
 
-Enable a satisfying use of [sentry.io](https://sentry.io/welcome/) without load the entire bundle inside the application which weights about 90kb minified ([resources](https://bundlephobia.com/package/@sentry/react@6.15.0))
+Enable a satisfying use of [sentry.io](https://sentry.io/welcome/) without load the
+entire bundle inside the application which weights about 90kb
+minified ([resources](https://bundlephobia.com/package/@sentry/react@6.15.0))
 
 ## Using
 
@@ -14,10 +17,13 @@ Install the dependencie
 npm i sentry-react-lazy
 ```
 
-Wrap the application (or the part where you want use the service) with the `<SentryProvider>` component and set the configuration settings.
+Wrap the application (or the part where you want use the service) with the `<SentryProvider>` component and
+set the configuration settings.
 
-To avoid annoing adBlocking software it can be useful load the CDN using a tunnel or serving it directly from the same server.
-[Check here](https://docs.sentry.io/platforms/javascript/guides/react/troubleshooting/) the documentation and then just change the url or the config.
+To avoid annoing adBlocking software it can be useful load the CDN
+using a tunnel or serving it directly from the same server.
+[Check here](https://docs.sentry.io/platforms/javascript/guides/react/troubleshooting/)
+the documentation and then just change the url or the config.
 
 ```javascript
 const sentryConfig = {
@@ -72,18 +78,20 @@ export default function MyComponent() {
 
 ## Method
 
-Sentry's SDK hooks into your runtime environment and automatically reports errors, uncaught exceptions, and unhandled rejections as well as other types of errors depending on the platform. ([doc](https://docs.sentry.io/platforms/javascript/usage/))
+Sentry's SDK hooks into your runtime environment and automatically
+reports errors, uncaught exceptions, and unhandled rejections as well
+as other types of errors depending on the platform. ([doc](https://docs.sentry.io/platforms/javascript/usage/))
 
 If you want report custom exeption it can be also possible use the following functions.
 
-| method                     | description                                                                                                                    |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `onLoad(callback)`         | execute the initialization after the CDN loading                                                                               |
+| method     | description      |
+| -------------------------- | -- |
+| `onLoad(callback)`         | execute the initialization after the CDN loading  |
 | `init(config)`             | configure the sentry setup as [doc](https://docs.sentry.io/platforms/javascript/configuration/) (not all fields are available) |
-| `captureMessage(msg)`      | capture a custom message                                                                                                       |
-| `captureException(err)`    | capture the entire exception passing the Error object as argument                                                              |
-| `configureScope(callback)` | set the level within the scope ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))                           |
-| `withScope(callback)`      | override the default level within the event ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))              |
+| `captureMessage(msg)`  | capture a custom message    |
+| `captureException(err)`| capture the entire exception passing the Error object as argument   |
+| `configureScope(callback)`| set the level within the scope ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))|
+| `withScope(callback)` | override the default level within the event ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/)) |
 
 Those functions also take as optional argument the scope of the error. ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))
 
