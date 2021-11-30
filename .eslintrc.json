@@ -1,0 +1,80 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "react-hooks"],
+  "ignorePatterns": [".eslintrc.js"],
+  "extends": [
+    "airbnb-base",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "jest": true,
+    "node": true
+  },
+  "rules": {
+    "react/react-in-jsx-scope": 0,
+    "@typescript-eslint/no-explicit-any": "warn",
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "@typescript-eslint/no-unused-vars": [
+      2,
+      {
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "no-console": [
+      2,
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    // TODO: remove this exception once all the warning are fixed
+    "prefer-rest-params": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // React version. "detect" automatically picks the version you have installed.
+    }
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "plugins": ["@typescript-eslint", "unused-imports"],
+      "extends": ["airbnb-typescript", "plugin:prettier/recommended"],
+      "rules": {
+        // TODO: remove this exception once all the warning are fixed
+        "import/order": "warn",
+        "no-cond-assign": "warn",
+        "no-param-reassign": "warn",
+        "@typescript-eslint/no-loop-func": "warn",
+        "class-methods-use-this": "warn",
+        "@typescript-eslint/no-use-before-define": "warn",
+        "@typescript-eslint/no-shadow": "warn",
+        "no-nested-ternary": "warn",
+        "@typescript-eslint/no-unused-expressions": "warn",
+        "import/no-extraneous-dependencies": "warn",
+        "global-require": "warn",
+        "import/no-dynamic-require": "warn",
+        "consistent-return": "warn",
+        "import/no-cycle": "warn",
+        "@typescript-eslint/no-redeclare": "warn",
+        "default-case": "warn",
+        "prefer-destructuring": "warn",
+        "no-await-in-loop": "warn",
+        "no-return-assign": "warn",
+        "prefer-rest-params": "warn",
+        "import/no-duplicates": "warn",
+        "array-callback-return": "warn"
+      },
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "tsconfig.json",
+        "sourceType": "module"
+      }
+    }
+  ]
+}

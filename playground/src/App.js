@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
-import { useSentry } from './component-lib';
+import logo from './logo.svg'
+import './App.css'
+import { useSentry } from './component-lib'
 
 function App() {
-
   const Sentry = useSentry()
 
   function error() {
-    Sentry.configureScope(scope => {
+    Sentry.configureScope((scope) => {
       scope.setLevel(Sentry.Severity.Log)
     })
     try {
-        throw new Error()
+      throw new Error()
     } catch (error) {
-      Sentry.withScope(scope => {
+      Sentry.withScope((scope) => {
         scope.setFingerprint([error, String('error with scope after change')])
         Sentry.captureMessage('custom message')
       })
     }
   }
-  
+
   return (
     <div className="App">
       <header className="App-header">
@@ -35,10 +34,10 @@ function App() {
         >
           Learn React
         </a>
-          <button onClick={() => error()}>Button</button>
+        <button onClick={() => error()}>Button</button>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
