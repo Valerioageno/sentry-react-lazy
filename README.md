@@ -1,6 +1,6 @@
 # Sentry react lazy
 
-This package create a `<script>` that load the sentry CDN, initialize the service and share the SDK around the whole application using the [React Context API](https://reactjs.org/docs/context.html).
+This package create a `<script>` that loads the sentry CDN, initialize the service and share the SDK around the whole application using the [React Context API](https://reactjs.org/docs/context.html).
 
 ## Goal 
 
@@ -8,13 +8,15 @@ Enable a satisfying use of [sentry.io](https://sentry.io/welcome/) without load 
 
 ## Using
 Install the dependencie
+
 ```bash
 npm i sentry-react-lazy
 ```
 
 Wrap the application (or the part where you want use the service) with the `<SentryProvider>` component and set the configuration settings.
 
-To avoid annoing adBlocking software it can be useful load the CDN using a tunnel or serving it directly from the same server. [Check here](https://docs.sentry.io/platforms/javascript/guides/react/troubleshooting/) the documentation and then just change the url or the config.
+To avoid annoing adBlocking software it can be useful load the CDN using a tunnel or serving it directly from the same server. 
+[Check here](https://docs.sentry.io/platforms/javascript/guides/react/troubleshooting/) the documentation and then just change the url or the config.
 
 ```javascript
 const sentryConfig = {
@@ -35,19 +37,20 @@ ReactDOM.render(
 );
 ```
 
-Then all exception will be monitored so:
+Then all exceptions will be monitored so:
 
 ```javascript
 <button onClick={() => {throw new Error('Sentry error')}}>Button</button>
 ```
 
-If you want to use the internal Sentry function you can just:
+If you want to use the internal Sentry functions you can just:
 
 ```javascript
 import { useSentry } from 'sentry-react-lazy'
 
 export default function MyComponent() {
-    const { Sentry } = useSentry()
+    const Sentry = useSentry()
+    // Or destructuring with: const { captureMessage } = useSentry()
 
     return (
         <div>

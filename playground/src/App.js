@@ -4,7 +4,7 @@ import { useSentry } from './component-lib';
 
 function App() {
 
-  const { Sentry }= useSentry()
+  const { captureMessage } = useSentry()
   
   return (
     <div className="App">
@@ -21,7 +21,7 @@ function App() {
         >
           Learn React
         </a>
-          <button onClick={() => Sentry.captureMessage('hello')}>Button</button>
+          <button onClick={() => captureMessage('hello')}>Button</button>
       </header>
     </div>
   );
