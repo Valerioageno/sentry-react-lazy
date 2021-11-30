@@ -29,6 +29,7 @@ const sentryConfig = {
 ReactDOM.render(
     <SentryProvider 
       url="https://browser.sentry-cdn.com/6.15.0/bundle.tracing.min.js"
+      integrity="sha384-1k7XKRQgqjUbNyG2sI+qsY8HTHMOeLdycMx6hoGuNSANZ3WrMa3LXkr+M4t+SIpF"
       config={sentryConfig}
     >
       <App />
@@ -59,6 +60,23 @@ export default function MyComponent() {
     )
 }
 ```
+
+## Method
+
+Sentry's SDK hooks into your runtime environment and automatically reports errors, uncaught exceptions, and unhandled rejections as well as other types of errors depending on the platform. ([doc](https://docs.sentry.io/platforms/javascript/usage/))
+
+If you want report custom exeption it can be also possible use the following functions. 
+
+| method                   | description  |
+|---                       |---|
+| `onLoad(callback)`       | execute the initialization after the CDN loading|
+| `init(config)`           | configure the sentry setup as [doc](https://docs.sentry.io/platforms/javascript/configuration/) (not all fields are available)|
+| `captureMessage(msg)`    | capture a custom message   |
+| `captureException(err)`  | capture the entire exception passing the Error object as argument   |
+| `configureScope(callback)`  | set the level within the scope ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))   |
+| `withScope(callback)`    | override the default level within the event ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))  |
+
+Those functions also take as optional argument the scope of the error. ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))
 
 ## How to start contributing
 

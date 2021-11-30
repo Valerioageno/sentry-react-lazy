@@ -1,10 +1,13 @@
-export type Level = 'debug' | 'info' | 'warning' | 'error' | 'fatal';
+export type Level = 'debug' | 'info' | 'warning' | 'log' | 'error' | 'fatal' | 'critical';
 
 export interface SentryType {
   onLoad: (callback: () => void) => void;
   init: (options: SentryConfigType) => void;
   captureMessage: (msg: string, lv?: Level) => void;
   captureException: (err: any, lv?: Level) => void;
+  configureScope: (callback: () => void) => void;
+  Severity: {[key: string]: Level}
+  withScope: (callback: () => void) => void;
 }
 
 export interface SentryConfigType {

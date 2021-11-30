@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect } from "react";
+import { createContext, useContext, useLayoutEffect } from "react";
 import { noop } from "./helpers";
 import type { SentryType, Level, SentryConfigType } from './types'
 
@@ -6,13 +6,19 @@ declare global {
     interface Window {
         Sentry: SentryType
     }
+    interface HTMLScriptElement {
+        onreadystatechange: () => void
+    }
 }
 
 const SentryContext = createContext<SentryType>({
     onLoad: noop,
     init: noop,
     captureMessage: noop,
-    captureException: noop
+    captureException: noop,
+    configureScope: noop,
+    Severity: {},
+    withScope: noop
 })
 
 interface ContextProps {
@@ -29,10 +35,13 @@ export function SentryProvider({ children, url, config, integrity }: ContextProp
         init: (options: SentryConfigType) => window?.Sentry.init(options),
         captureMessage: (msg: string, lv?: Level) => window?.Sentry.captureMessage(msg, lv ?? 'warning'),
         captureException: (err: any, lv?: Level) => window?.Sentry.captureException(err, lv ?? 'warning'),
+        Severity: {Critical: "critical",Debug: "debug",Error: "error",Fatal: "fatal",Info: "info",Log: "log",Warning: "warning"},
+        configureScope: (callback: () => void) => window?.Sentry.configureScope(callback),
+        withScope: (callback: () => void) => window?.Sentry.withScope(callback)
     }
 
-    useEffect(() => {
-        const script: any = document.createElement('script');
+    useLayoutEffect(() => {
+        const script: HTMLScriptElement = document.createElement('script');
         script.src = url;
         script.crossOrigin = 'anonymous';
         const head = document.getElementsByTagName('head')[0];
@@ -44,9 +53,7 @@ export function SentryProvider({ children, url, config, integrity }: ContextProp
         function checkLoadingAndRun(this: any) {
             if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
                 done = true;
-                Sentry.onLoad(() => {
-                    Sentry.init(config);
-                })
+                Sentry.onLoad(() => Sentry.init(config))
             }
         }
 

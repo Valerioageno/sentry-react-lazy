@@ -4,7 +4,21 @@ import { useSentry } from './component-lib';
 
 function App() {
 
-  const { captureMessage } = useSentry()
+  const Sentry = useSentry()
+
+  function error() {
+    Sentry.configureScope(scope => {
+      scope.setLevel(Sentry.Severity.Log)
+    })
+    try {
+        throw new Error()
+    } catch (error) {
+      Sentry.withScope(scope => {
+        scope.setFingerprint([error, String('error with scope after change')])
+        Sentry.captureMessage('custom message')
+      })
+    }
+  }
   
   return (
     <div className="App">
@@ -21,7 +35,7 @@ function App() {
         >
           Learn React
         </a>
-          <button onClick={() => captureMessage('hello')}>Button</button>
+          <button onClick={() => error()}>Button</button>
       </header>
     </div>
   );
