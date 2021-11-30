@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { SentryProvider } from './component-lib'
 
 const sentryConfig = {
-  dsn: "",
+  dsn: process.env.REACT_APP_SENTRY_DSN,
   debug: true,
   environment: "development",
   release: "test"

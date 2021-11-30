@@ -2,18 +2,14 @@ import { createContext, useCallback, useContext, useEffect } from "react";
 import { noop } from "./helpers";
 import type { SentryType, Level, SentryConfigType } from './types'
 
-interface SentryData {
-
-}
-
 declare global {
     interface Window {
         Sentry: SentryType
     }
 }
 
-const SentryContext = createContext<SentryData>({
-    onload: noop,
+const SentryContext = createContext<SentryType>({
+    onLoad: noop,
     init: noop,
     captureMessage: noop,
     captureException: noop
@@ -61,6 +57,6 @@ export function SentryProvider({ children, url, config, integrity }: ContextProp
     return <SentryContext.Provider value={Sentry}>{children}</SentryContext.Provider>
 }
 
-export function useSentry(): SentryData {
-    return useContext<SentryData>(SentryContext)
+export function useSentry(): SentryType {
+    return useContext<SentryType>(SentryContext)
 }

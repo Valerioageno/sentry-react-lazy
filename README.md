@@ -60,9 +60,10 @@ export default function MyComponent() {
 ## How to start contributing
 
 1. `git clone git@github.com:Valerioageno/sentry-react-lazy.git`
-2. `npm run i-all`
-3. `npm run dev`
-4. enjoy
+2. remove the extension .example from `playground/.env.example` and set your own DSN from [sentry.io](https://sentry.io)
+3. `npm run i-all`
+4. `npm run dev`
+5. enjoy
 
 Any helps or suggestions will be appreciated.
 
