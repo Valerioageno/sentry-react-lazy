@@ -1,7 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
+import { useSentry } from './component-lib';
 
 function App() {
+
+  const { Sentry }= useSentry()
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +21,7 @@ function App() {
         >
           Learn React
         </a>
+          <button onClick={() => Sentry.captureMessage('hello')}>Button</button>
       </header>
     </div>
   );
