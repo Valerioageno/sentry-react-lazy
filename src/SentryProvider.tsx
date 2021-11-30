@@ -23,7 +23,7 @@ interface ContextProps {
     children: JSX.Element;
     url: string;
     config: SentryConfigType;
-    integrity: string
+    integrity?: string
 }
 
 export function SentryProvider({ children, url, config, integrity }: ContextProps): JSX.Element {

@@ -16,7 +16,6 @@ ReactDOM.render(
   <React.StrictMode>
     <SentryProvider 
       url="https://browser.sentry-cdn.com/6.15.0/bundle.tracing.min.js"
-      integrity="sha384-1k7XKRQgqjUbNyG2sI+qsY8HTHMOeLdycMx6hoGuNSANZ3WrMa3LXkr+M4t+SIpF"
       config={sentryConfig}
     >
       <App />
