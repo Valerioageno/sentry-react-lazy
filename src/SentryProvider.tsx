@@ -35,12 +35,15 @@ export function SentryProvider({
   integrity
 }: ContextProps): JSX.Element {
   const Sentry: SentryType = {
-    onLoad: (callback: () => void) => window?.Sentry.onLoad(callback),
-    init: (options: SentryConfigType) => window?.Sentry.init(options),
+    onLoad: (callback: () => void) => window?.Sentry?.onLoad(callback),
+    init: (options: SentryConfigType) => window?.Sentry?.init(options),
     captureMessage: (msg: string, lv?: Level) =>
-      window?.Sentry.captureMessage(msg, lv ?? 'warning'),
+      window?.Sentry?.captureMessage(msg, lv ?? 'warning'),
     captureException: (err: any, lv?: Level) =>
-      window?.Sentry.captureException(err, lv ?? 'warning'),
+      window?.Sentry?.captureException(err, lv ?? 'warning'),
+    configureScope: (callback: () => void) =>
+      window?.Sentry?.configureScope(callback),
+    withScope: (callback: () => void) => window?.Sentry?.withScope(callback),
     Severity: {
       Critical: 'critical',
       Debug: 'debug',
@@ -49,16 +52,14 @@ export function SentryProvider({
       Info: 'info',
       Log: 'log',
       Warning: 'warning'
-    },
-    configureScope: (callback: () => void) =>
-      window?.Sentry.configureScope(callback),
-    withScope: (callback: () => void) => window?.Sentry.withScope(callback)
+    }
   }
 
   useLayoutEffect(() => {
     const script: HTMLScriptElement = document.createElement('script')
     script.src = url
     script.crossOrigin = 'anonymous'
+    script.type = 'application/javascript'
     const head = document.getElementsByTagName('head')[0]
     let done = false
     script.onload = checkLoadingAndRun
