@@ -31,9 +31,7 @@
       {
         "allow": ["warn", "error"]
       }
-    ],
-    // TODO: remove this exception once all the warning are fixed
-    "prefer-rest-params": "warn"
+    ]
   },
   "settings": {
     "react": {
@@ -46,8 +44,6 @@
       "plugins": ["@typescript-eslint", "unused-imports"],
       "extends": ["airbnb-typescript", "plugin:prettier/recommended"],
       "rules": {
-        // TODO: remove this exception once all the warning are fixed
-        "import/order": "warn",
         "no-cond-assign": "warn",
         "no-param-reassign": "warn",
         "@typescript-eslint/no-loop-func": "warn",
