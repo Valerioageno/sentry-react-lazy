@@ -1,7 +1,7 @@
 import logo from './logo.svg'
 import './App.css'
 import { useSentry } from './component-lib'
-import { useEffect } from 'react'
+import ApiCall from './ApiCall'
 
 function App() {
   const Sentry = useSentry()
@@ -24,6 +24,7 @@ function App() {
         <button onClick={() => Sentry.captureMessage('hello from button')}>
           Button
         </button>
+        <ApiCall />
       </header>
     </div>
   )

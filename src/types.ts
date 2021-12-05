@@ -1,3 +1,4 @@
+// TODO: Switch to enum
 export type Level =
   | 'debug'
   | 'info'
@@ -7,6 +8,17 @@ export type Level =
   | 'fatal'
   | 'critical'
 
+export interface TracingOptions {
+  tracingOrigins?: string[]
+  // TODO: Check the exact types beforeNavigate()
+  beforeNavigate?: () => void
+  shouldCreateSpanForRequest?: () => void
+  idleTimeout?: number
+  startTransactionOnLocationChange?: boolean
+  startTransactionOnPageLoad?: boolean
+  maxTransactionDuration?: boolean
+  markBackgroundTransactions?: boolean
+}
 export interface SentryType {
   onLoad: (callback: () => void) => void
   init: (options: SentryConfigType) => void
@@ -15,6 +27,8 @@ export interface SentryType {
   configureScope: (callback: () => void) => void
   Severity: { [key: string]: Level }
   withScope: (callback: () => void) => void
+  Integrations: any
+  // TODO: set the correct classes available
 }
 
 export interface SentryConfigType {
@@ -33,6 +47,8 @@ export interface SentryConfigType {
   maxValueLength?: number
   normalizeDepth?: number
   // TODO: Integration configurations - https://docs.sentry.io/platforms/javascript/configuration/options/#integration-configuration
+  integrations?: any
+  defaultIntegrations?: boolean
 
   // TODO: Hooks - https://docs.sentry.io/platforms/javascript/configuration/options/#hooks
 

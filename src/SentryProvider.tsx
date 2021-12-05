@@ -1,6 +1,11 @@
 import { createContext, useContext, useLayoutEffect } from 'react'
 import { noop } from './helpers'
-import type { SentryType, Level, SentryConfigType } from './types'
+import type {
+  SentryType,
+  Level,
+  SentryConfigType,
+  TracingOptions
+} from './types'
 
 declare global {
   interface Window {
@@ -18,7 +23,8 @@ const SentryContext = createContext<SentryType>({
   captureException: noop,
   configureScope: noop,
   Severity: {},
-  withScope: noop
+  withScope: noop,
+  Integrations: {}
 })
 
 interface ContextProps {
@@ -26,13 +32,17 @@ interface ContextProps {
   url: string
   config: SentryConfigType
   integrity?: string
+  performance?: boolean
+  tracingOptions?: TracingOptions
 }
 
 export function SentryProvider({
   children,
   url,
   config,
-  integrity
+  integrity,
+  performance = false,
+  tracingOptions
 }: ContextProps): JSX.Element {
   const Sentry: SentryType = {
     onLoad: (callback: () => void) => window?.Sentry?.onLoad(callback),
@@ -52,7 +62,8 @@ export function SentryProvider({
       Info: 'info',
       Log: 'log',
       Warning: 'warning'
-    }
+    },
+    Integrations: {}
   }
 
   useLayoutEffect(() => {
@@ -62,10 +73,8 @@ export function SentryProvider({
     script.type = 'application/javascript'
     const head = document.getElementsByTagName('head')[0]
     let done = false
-    script.onload = checkLoadingAndRun
-    script.onreadystatechange = checkLoadingAndRun
-    if (integrity) script.integrity = integrity
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function checkLoadingAndRun(this: any) {
       if (
         !done &&
@@ -73,12 +82,25 @@ export function SentryProvider({
           this.readyState === 'loaded' ||
           this.readyState === 'complete')
       ) {
+        if (performance) {
+          const BrowserTracing =
+            new window.Sentry.Integrations.BrowserTracing.prototype.constructor(
+              tracingOptions
+            )
+          // eslint-disable-next-line no-param-reassign
+          config.integrations = [BrowserTracing]
+        }
         done = true
         Sentry.onLoad(() => Sentry.init(config))
       }
     }
 
+    script.onload = checkLoadingAndRun
+    script.onreadystatechange = checkLoadingAndRun
+    if (integrity) script.integrity = integrity
+
     head.appendChild(script)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

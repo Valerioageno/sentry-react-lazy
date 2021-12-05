@@ -95,6 +95,29 @@ If you want report custom exeption it can be also possible use the following fun
 
 Those functions also take as optional argument the scope of the error. ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))
 
+## Performance monitoring
+
+Performance monitoring is available using the right CDN.
+
+In order to use the automatic integration `new TracingIntegrations.BrowserTracing()` is needed to set the `performance`
+prop in the `<SentryProvider>`. Custom options must be passed as `tracingOptions` prop as expected by the the original
+[doc](https://docs.sentry.io/platforms/javascript/performance/instrumentation/automatic-instrumentation/#configuration-options).
+
+```javascript
+<SentryProvider
+  url="https://browser.sentry-cdn.com/6.15.0/bundle.tracing.min.js"
+  integrity="sha384-1k7XKRQgqjUbNyG2sI+qsY8HTHMOeLdycMx6hoGuNSANZ3WrMa3LXkr+M4t+SIpF"
+  config={sentryConfig}
+  performance
+  tracingOptions={{tracingOrigins: ['localhost', 'my-site-url.com', /^\//]}}
+>
+  <App />
+</SentryProvider>
+```
+
+It can be possible also create your [custom integration](https://docs.sentry.io/platforms/javascript/performance/instrumentation/custom-instrumentation/)
+without donwload any other package.
+
 ## How to start contributing
 
 1. `git clone git@github.com:Valerioageno/sentry-react-lazy.git`

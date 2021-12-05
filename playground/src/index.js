@@ -9,14 +9,20 @@ const sentryConfig = {
   dsn: process.env.REACT_APP_SENTRY_DSN,
   debug: true,
   environment: 'development',
-  release: 'test'
+  release: 'test',
+  sampleRate: 1.0
 }
 
 ReactDOM.render(
   <React.StrictMode>
     <SentryProvider
       url="https://browser.sentry-cdn.com/6.15.0/bundle.tracing.min.js"
+      integrity="sha384-1k7XKRQgqjUbNyG2sI+qsY8HTHMOeLdycMx6hoGuNSANZ3WrMa3LXkr+M4t+SIpF"
       config={sentryConfig}
+      performance
+      tracingOptions={{
+        tracingOrigins: ['localhost', 'my-site-url.com', /^\//]
+      }}
     >
       <App />
     </SentryProvider>
