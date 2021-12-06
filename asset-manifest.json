@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/static/js/main.aa781781.chunk.js",
-    "main.js.map": "/static/js/main.aa781781.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.f42b67c5.js",
-    "runtime-main.js.map": "/static/js/runtime-main.f42b67c5.js.map",
-    "static/js/2.1b4b8339.chunk.js": "/static/js/2.1b4b8339.chunk.js",
-    "static/js/2.1b4b8339.chunk.js.map": "/static/js/2.1b4b8339.chunk.js.map",
-    "static/js/3.efe0ce43.chunk.js": "/static/js/3.efe0ce43.chunk.js",
-    "static/js/3.efe0ce43.chunk.js.map": "/static/js/3.efe0ce43.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/main.8c8b27cf.chunk.css.map": "/static/css/main.8c8b27cf.chunk.css.map",
-    "static/js/2.1b4b8339.chunk.js.LICENSE.txt": "/static/js/2.1b4b8339.chunk.js.LICENSE.txt",
-    "static/media/logo.6ce24c58.svg": "/static/media/logo.6ce24c58.svg"
+    "main.css": "/sentry-react-lazy/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/sentry-react-lazy/static/js/main.aa781781.chunk.js",
+    "main.js.map": "/sentry-react-lazy/static/js/main.aa781781.chunk.js.map",
+    "runtime-main.js": "/sentry-react-lazy/static/js/runtime-main.b9fbadba.js",
+    "runtime-main.js.map": "/sentry-react-lazy/static/js/runtime-main.b9fbadba.js.map",
+    "static/js/2.1b4b8339.chunk.js": "/sentry-react-lazy/static/js/2.1b4b8339.chunk.js",
+    "static/js/2.1b4b8339.chunk.js.map": "/sentry-react-lazy/static/js/2.1b4b8339.chunk.js.map",
+    "static/js/3.efe0ce43.chunk.js": "/sentry-react-lazy/static/js/3.efe0ce43.chunk.js",
+    "static/js/3.efe0ce43.chunk.js.map": "/sentry-react-lazy/static/js/3.efe0ce43.chunk.js.map",
+    "index.html": "/sentry-react-lazy/index.html",
+    "static/css/main.8c8b27cf.chunk.css.map": "/sentry-react-lazy/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.1b4b8339.chunk.js.LICENSE.txt": "/sentry-react-lazy/static/js/2.1b4b8339.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/sentry-react-lazy/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.f42b67c5.js",
+    "static/js/runtime-main.b9fbadba.js",
     "static/js/2.1b4b8339.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
     "static/js/main.aa781781.chunk.js"
