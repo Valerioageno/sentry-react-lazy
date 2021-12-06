@@ -20,7 +20,7 @@
     "fmt:check": "prettier --check --ignore-path .gitignore \"(src|playground)/**/*.+(ts|js|tsx)\"",
     "prepare": "husky install",
     "predeploy": "npm run build && cd playground && npm run build",
-    "deploy": "gh-pages -b main -d ./playground/build"
+    "deploy": "gh-pages -d ./playground/build"
   },
   "keywords": [
     "react",
