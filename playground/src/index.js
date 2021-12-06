@@ -21,7 +21,7 @@ ReactDOM.render(
       config={sentryConfig}
       performance
       tracingOptions={{
-        tracingOrigins: ['localhost', 'my-site-url.com', /^\//]
+        tracingOrigins: ['localhost', 'Valerioageno.github.io', /^\//]
       }}
     >
       <App />

@@ -21,4 +21,5 @@ yarn-error.log*
 playground/.env
 **/node_modules/
 dist/
+**/build/
 playground/src/component-lib

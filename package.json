@@ -5,6 +5,7 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
+  "homepage": "http://Valerioageno.github.io/sentry-react-lazy",
   "scripts": {
     "build": "rollup -c",
     "build-watch": "rollup -c -w",
@@ -17,7 +18,9 @@
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
     "fmt": "prettier --ignore-path .gitignore \"(src|playground)/**/*.+(ts|js|tsx)\" --write",
     "fmt:check": "prettier --check --ignore-path .gitignore \"(src|playground)/**/*.+(ts|js|tsx)\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "predeploy": "npm run build && cd playground && npm run build",
+    "deploy": "gh-pages -b main -d ./playground/build"
   },
   "keywords": [
     "react",
@@ -44,6 +47,7 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "gh-pages": "^3.2.3",
     "husky": "^7.0.0",
     "markdownlint-cli2": "^0.3.2",
     "npm-run-all": "^4.1.5",
