@@ -24,6 +24,40 @@
   color: white;
 }
 
+.App-header h1 {
+  font-size: 70px;
+}
+
+.App-header a {
+  font-size: 25px;
+  position: fixed;
+  color: white;
+  top: 20px;
+  right: 20px;
+}
+
+button {
+  height: 50px;
+  width: 170px;
+  color: black;
+  background-color: #61DAFB;
+  border: none;
+  outline: none;
+  position: relative;
+  margin-top: 20px;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+button, button:focus{
+  outline: none;
+  border: 1px solid transparent;
+}
+
+button:active{
+  outline: none;
+}
+
 .App-link {
   color: #61dafb;
 }

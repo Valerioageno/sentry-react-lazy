@@ -39,8 +39,8 @@ const sentryConfig = {
 
 ReactDOM.render(
   <SentryProvider
-    url="https://browser.sentry-cdn.com/6.15.0/bundle.tracing.min.js"
-    integrity="sha384-1k7XKRQgqjUbNyG2sI+qsY8HTHMOeLdycMx6hoGuNSANZ3WrMa3LXkr+M4t+SIpF"
+    url="https://browser.sentry-cdn.com/6.16.0/bundle.tracing.min.js"
+    integrity="sha384-nOg4TW2SG7+ChoY+hVJJjLwLlnood85Xw4eFnH7/3VUmhvQCBlXO4KHlLkV/4JmG"
     config={sentryConfig}
   >
     <App />
@@ -109,8 +109,8 @@ prop in the `<SentryProvider>`. Custom options must be passed as `tracingOptions
 
 ```javascript
 <SentryProvider
-  url="https://browser.sentry-cdn.com/6.15.0/bundle.tracing.min.js"
-  integrity="sha384-1k7XKRQgqjUbNyG2sI+qsY8HTHMOeLdycMx6hoGuNSANZ3WrMa3LXkr+M4t+SIpF"
+  url="https://browser.sentry-cdn.com/6.16.0/bundle.tracing.min.js"
+  integrity="sha384-nOg4TW2SG7+ChoY+hVJJjLwLlnood85Xw4eFnH7/3VUmhvQCBlXO4KHlLkV/4JmG"
   config={sentryConfig}
   performance
   tracingOptions={{tracingOrigins: ['localhost', 'my-site-url.com', /^\//]}}

@@ -1,31 +1,19 @@
-import logo from './logo.svg'
-import './App.css'
-import { useSentry } from './component-lib'
-import ApiCall from './ApiCall'
+import { Routes, Route } from 'react-router-dom'
+import Error404 from './pages/404'
+import About from './pages/About'
+import Home from './pages/Home'
 
-function App() {
-  const Sentry = useSentry()
+const App = () => {
+  const base =
+    window.location.hostname !== 'localhost' ? '/sentry-react-lazy' : ''
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button onClick={() => Sentry.captureMessage('hello from button')}>
-          Button
-        </button>
-        <ApiCall />
-      </header>
+      <Routes>
+        <Route path={`${base}/`} element={<Home />} />
+        <Route path={`${base}/about`} element={<About />} />
+        <Route path={`${base}/*`} element={<Error404 />} />
+      </Routes>
     </div>
   )
 }
