@@ -24,7 +24,8 @@ const SentryContext = createContext<SentryType>({
   configureScope: noop,
   Severity: {},
   withScope: noop,
-  Integrations: {}
+  Integrations: {},
+  setContext: noop
 })
 
 interface ContextProps {
@@ -45,15 +46,14 @@ export function SentryProvider({
   tracingOptions
 }: ContextProps): JSX.Element {
   const Sentry: SentryType = {
-    onLoad: (callback: () => void) => window?.Sentry?.onLoad(callback),
-    init: (options: SentryConfigType) => window?.Sentry?.init(options),
-    captureMessage: (msg: string, lv?: Level) =>
+    onLoad: (callback) => window?.Sentry?.onLoad(callback),
+    init: (options) => window?.Sentry?.init(options),
+    captureMessage: (msg, lv?: Level) =>
       window?.Sentry?.captureMessage(msg, lv ?? 'warning'),
-    captureException: (err: any, lv?: Level) =>
+    captureException: (err, lv?: Level) =>
       window?.Sentry?.captureException(err, lv ?? 'warning'),
-    configureScope: (callback: () => void) =>
-      window?.Sentry?.configureScope(callback),
-    withScope: (callback: () => void) => window?.Sentry?.withScope(callback),
+    configureScope: (callback) => window?.Sentry?.configureScope(callback),
+    withScope: (callback) => window?.Sentry?.withScope(callback),
     Severity: {
       Critical: 'critical',
       Debug: 'debug',
@@ -63,7 +63,8 @@ export function SentryProvider({
       Log: 'log',
       Warning: 'warning'
     },
-    Integrations: {}
+    Integrations: {},
+    setContext: (str, obj) => window?.Sentry?.setContext(str, obj)
   }
 
   useLayoutEffect(() => {
@@ -101,7 +102,7 @@ export function SentryProvider({
 
     head.appendChild(script)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [config])
 
   return (
     <SentryContext.Provider value={Sentry}>{children}</SentryContext.Provider>

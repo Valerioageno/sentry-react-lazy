@@ -29,6 +29,7 @@ export interface SentryType {
   withScope: (callback: () => void) => void
   Integrations: any
   // TODO: set the correct classes available
+  setContext: (str: string, obj: { [k: string]: any }) => void
 }
 
 export interface SentryConfigType {

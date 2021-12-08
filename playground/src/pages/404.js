@@ -8,7 +8,14 @@ function Error404() {
   const Sentry = useSentry()
 
   useEffect(() => {
-    Sentry.captureMessage('page 404')
+    Sentry.withScope(function (scope) {
+      scope.setLevel('fatal')
+      Sentry.setContext('CONTEXT', {
+        name: 'Page 404',
+        message: 'why they are here?'
+      })
+      Sentry.captureException('fatal')
+    })
   }, [Sentry])
 
   const base =

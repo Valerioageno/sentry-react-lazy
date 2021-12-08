@@ -4,5 +4,15 @@ export default function ApiCall() {
     const json = await response.json()
     console.log(json)
   }
-  return <button onClick={call}>Call API test</button>
+  const callFail = async () => {
+    const response = await fetch('https://api64.ipify.or?format=json')
+    const json = await response.json()
+    console.log(json)
+  }
+  return (
+    <>
+      <button onClick={call}>Call API</button>
+      <button onClick={callFail}>Call API fail</button>
+    </>
+  )
 }
