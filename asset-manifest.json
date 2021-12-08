@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/sentry-react-lazy/static/css/main.3ba08a4a.chunk.css",
-    "main.js": "/sentry-react-lazy/static/js/main.c8e6db2b.chunk.js",
-    "main.js.map": "/sentry-react-lazy/static/js/main.c8e6db2b.chunk.js.map",
+    "main.js": "/sentry-react-lazy/static/js/main.74b6bb52.chunk.js",
+    "main.js.map": "/sentry-react-lazy/static/js/main.74b6bb52.chunk.js.map",
     "runtime-main.js": "/sentry-react-lazy/static/js/runtime-main.bba19fa3.js",
     "runtime-main.js.map": "/sentry-react-lazy/static/js/runtime-main.bba19fa3.js.map",
-    "static/js/2.9feaf3db.chunk.js": "/sentry-react-lazy/static/js/2.9feaf3db.chunk.js",
-    "static/js/2.9feaf3db.chunk.js.map": "/sentry-react-lazy/static/js/2.9feaf3db.chunk.js.map",
+    "static/js/2.f36c30d9.chunk.js": "/sentry-react-lazy/static/js/2.f36c30d9.chunk.js",
+    "static/js/2.f36c30d9.chunk.js.map": "/sentry-react-lazy/static/js/2.f36c30d9.chunk.js.map",
     "static/js/3.b0ff989e.chunk.js": "/sentry-react-lazy/static/js/3.b0ff989e.chunk.js",
     "static/js/3.b0ff989e.chunk.js.map": "/sentry-react-lazy/static/js/3.b0ff989e.chunk.js.map",
     "index.html": "/sentry-react-lazy/index.html",
     "static/css/main.3ba08a4a.chunk.css.map": "/sentry-react-lazy/static/css/main.3ba08a4a.chunk.css.map",
-    "static/js/2.9feaf3db.chunk.js.LICENSE.txt": "/sentry-react-lazy/static/js/2.9feaf3db.chunk.js.LICENSE.txt",
+    "static/js/2.f36c30d9.chunk.js.LICENSE.txt": "/sentry-react-lazy/static/js/2.f36c30d9.chunk.js.LICENSE.txt",
     "static/media/logo.6ce24c58.svg": "/sentry-react-lazy/static/media/logo.6ce24c58.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.bba19fa3.js",
-    "static/js/2.9feaf3db.chunk.js",
+    "static/js/2.f36c30d9.chunk.js",
     "static/css/main.3ba08a4a.chunk.css",
-    "static/js/main.c8e6db2b.chunk.js"
+    "static/js/main.74b6bb52.chunk.js"
   ]
 }
