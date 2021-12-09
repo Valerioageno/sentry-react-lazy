@@ -11,7 +11,8 @@ const sentryConfig = {
   debug: true,
   environment: 'development',
   release: 'test',
-  sampleRate: 1.0
+  sampleRate: 1.0,
+  tracesSampleRate: 1.0
 }
 
 ReactDOM.render(

@@ -3,6 +3,8 @@
 This package create a `<script>` that loads the sentry CDN,
 initialize the service and share the SDK around the whole application using the [React Context API](https://reactjs.org/docs/context.html).
 
+Please refer to the original [documentation](https://docs.sentry.io/platforms/javascript/) for more information about the usage.
+
 ## ALERT
 
 The project is currently under development and it has not pushed on [npm](https://www.npmjs.com/) yet.
@@ -39,8 +41,8 @@ const sentryConfig = {
 
 ReactDOM.render(
   <SentryProvider
-    url="https://browser.sentry-cdn.com/6.16.0/bundle.tracing.min.js"
-    integrity="sha384-nOg4TW2SG7+ChoY+hVJJjLwLlnood85Xw4eFnH7/3VUmhvQCBlXO4KHlLkV/4JmG"
+    url="https://browser.sentry-cdn.com/6.16.0/bundle.min.js"
+    integrity="sha384-uCtXtkrVtGeYH5N3JGG4lcPwQfXSwZAoP8haDYEo+ViUGd7T56ti5p3CDmK3ausF"
     config={sentryConfig}
   >
     <App />
@@ -80,7 +82,7 @@ export default function MyComponent() {
 }
 ```
 
-## Method
+## Methods
 
 Sentry's SDK hooks into your runtime environment and automatically
 reports errors, uncaught exceptions, and unhandled rejections as well
@@ -96,6 +98,7 @@ If you want report custom exeption it can be also possible use the following fun
 | `captureException(err)`| capture the entire exception passing the Error object as argument   |
 | `configureScope(callback)`| set the level within the scope ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))|
 | `withScope(callback)` | override the default level within the event ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/)) |
+| `setContext(str, obj)` | set a custom context to the exception captured |
 
 Those functions also take as optional argument the scope of the error. ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))
 
@@ -103,9 +106,11 @@ Those functions also take as optional argument the scope of the error. ([doc](ht
 
 Performance monitoring is available using the right CDN.
 
-In order to use the automatic integration `new TracingIntegrations.BrowserTracing()` is needed to set the `performance`
+In order to use the automatic integration `new TracingIntegrations.BrowserTracing()` is need to set the `performance`
 prop in the `<SentryProvider>`. Custom options must be passed as `tracingOptions` prop as expected by the the original
 [doc](https://docs.sentry.io/platforms/javascript/performance/instrumentation/automatic-instrumentation/#configuration-options).
+
+ Don't forget to set `tracesSampleRate` in the configuration.
 
 ```javascript
 <SentryProvider
@@ -119,7 +124,7 @@ prop in the `<SentryProvider>`. Custom options must be passed as `tracingOptions
 </SentryProvider>
 ```
 
-It can be possible also create your [custom integration](https://docs.sentry.io/platforms/javascript/performance/instrumentation/custom-instrumentation/)
+It can be possible also create your [custom instrumentations](https://docs.sentry.io/platforms/javascript/performance/instrumentation/custom-instrumentation/)
 without donwload any other package.
 
 ## How to start contributing
@@ -130,7 +135,7 @@ without donwload any other package.
 4. `npm run dev`
 5. enjoy
 
-Any helps or suggestions will be appreciated.
+Any helps or suggestions will be really appreciated.
 
 ## License
 

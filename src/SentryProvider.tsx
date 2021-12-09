@@ -84,12 +84,21 @@ export function SentryProvider({
           this.readyState === 'complete')
       ) {
         if (performance) {
-          const BrowserTracing =
-            new window.Sentry.Integrations.BrowserTracing.prototype.constructor(
-              tracingOptions
-            )
-          // eslint-disable-next-line no-param-reassign
-          config.integrations = [BrowserTracing]
+          if (window.Sentry.Integrations.BrowserTracing) {
+            const BrowserTracing =
+              new window.Sentry.Integrations.BrowserTracing.prototype.constructor(
+                tracingOptions
+              )
+            // eslint-disable-next-line no-param-reassign
+            config.integrations = [BrowserTracing]
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+            config.debug
+              ? console.warn(
+                  "The performance integration needs the right CDN. Please check https://docs.sentry.io/platforms/javascript/install/cdn/#performance-bundle. Performance won't be analyzed."
+                )
+              : null
+          }
         }
         done = true
         Sentry.onLoad(() => Sentry.init(config))
