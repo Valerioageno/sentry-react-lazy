@@ -1,5 +1,7 @@
 # Sentry react lazy
 
+![Package CI](https://github.com/Valerioageno/sentry-react-lazy/actions/workflows/main.yml/badge.svg)
+
 This package create a `<script>` that loads the sentry CDN,
 initialize the service and share the SDK around the whole application using the [React Context API](https://reactjs.org/docs/context.html).
 

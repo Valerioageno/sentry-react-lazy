@@ -15,7 +15,7 @@ export default [
       { file: pkg.module, format: 'esm' }
     ],
     plugins: [
-      del({ targets: ['dist/*', 'playground/src/component-lib'] }),
+      del({ targets: ['dist/*', 'playground/src/component-lib', 'playground-ts/src/component-lib'] }),
       typescript()
     ],
     external: Object.keys(pkg.peerDependencies || {})
