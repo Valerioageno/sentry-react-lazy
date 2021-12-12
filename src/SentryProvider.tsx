@@ -1,4 +1,4 @@
-import { createContext, useContext, useLayoutEffect } from 'react'
+import { createContext, useContext, useLayoutEffect, useState } from 'react'
 import { noop } from './helpers'
 import type {
   SentryType,
@@ -25,7 +25,8 @@ const SentryContext = createContext<SentryType>({
   Severity: {},
   withScope: noop,
   Integrations: {},
-  setContext: noop
+  setContext: noop,
+  Scope: undefined
 })
 
 interface ContextProps {
@@ -35,6 +36,7 @@ interface ContextProps {
   integrity?: string
   performance?: boolean
   tracingOptions?: TracingOptions
+  scope?: boolean
 }
 
 export function SentryProvider({
@@ -45,7 +47,7 @@ export function SentryProvider({
   performance = false,
   tracingOptions
 }: ContextProps): JSX.Element {
-  const Sentry: SentryType = {
+  const [Sentry, setSentry] = useState<SentryType>({
     onLoad: (callback) => window?.Sentry?.onLoad(callback),
     init: (options) => window?.Sentry?.init(options),
     captureMessage: (msg, lv?: Level) =>
@@ -64,8 +66,9 @@ export function SentryProvider({
       Warning: 'warning'
     },
     Integrations: {},
-    setContext: (str, obj) => window?.Sentry?.setContext(str, obj)
-  }
+    setContext: (str, obj) => window?.Sentry?.setContext(str, obj),
+    Scope: undefined
+  })
 
   useLayoutEffect(() => {
     const script: HTMLScriptElement = document.createElement('script')
@@ -92,16 +95,22 @@ export function SentryProvider({
             // eslint-disable-next-line no-param-reassign
             config.integrations = [BrowserTracing]
           } else {
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            config.debug
-              ? console.warn(
-                  "The performance integration needs the right CDN. Please check https://docs.sentry.io/platforms/javascript/install/cdn/#performance-bundle. Performance won't be analyzed."
-                )
-              : null
+            // eslint-disable-next-line no-lonely-if
+            if (config.debug) {
+              console.warn(
+                "The performance integration needs the right CDN. Please check https://docs.sentry.io/platforms/javascript/install/cdn/#performance-bundle. Performance won't be analyzed."
+              )
+            }
           }
         }
         done = true
         Sentry.onLoad(() => Sentry.init(config))
+        if (window.Sentry.Scope) {
+          setSentry({
+            ...Sentry,
+            Scope: new window.Sentry.Scope.prototype.constructor()
+          })
+        }
       }
     }
 

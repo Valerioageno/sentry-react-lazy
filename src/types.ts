@@ -1,4 +1,5 @@
-// TODO: Switch to enum
+import type { Scope } from '@sentry/types'
+// TODO: check all "any" types
 export type Level =
   | 'debug'
   | 'info'
@@ -19,17 +20,24 @@ export interface TracingOptions {
   maxTransactionDuration?: boolean
   markBackgroundTransactions?: boolean
 }
+
+interface ScopeObject extends Scope {
+  prototype: any
+}
+
 export interface SentryType {
   onLoad: (callback: () => void) => void
   init: (options: SentryConfigType) => void
-  captureMessage: (msg: string, lv?: Level) => void
-  captureException: (err: any, lv?: Level) => void
+  captureMessage: (msg: string, lv?: any) => void
+  // TODO: Set the correct parameters for captureException
+  captureException: (err: any, lv?: any) => void
   configureScope: (callback: () => void) => void
   Severity: { [key: string]: Level }
   withScope: (callback: () => void) => void
   Integrations: any
   // TODO: set the correct classes available
   setContext: (str: string, obj: { [k: string]: any }) => void
+  Scope: ScopeObject | undefined
 }
 
 export interface SentryConfigType {

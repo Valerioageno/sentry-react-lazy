@@ -3,10 +3,26 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { SentryProvider, SentryConfigType } from './component-lib'
+
+const sentryConfig: SentryConfigType = {
+  dsn: process.env.REACT_APP_SENTRY_DSN ?? '',
+  debug: true,
+  environment: 'development',
+  release: 'test-ts',
+  sampleRate: 1.0
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SentryProvider
+      url="https://browser.sentry-cdn.com/6.16.1/bundle.min.js"
+      integrity="sha384-WkFzsrcXKeJ3KlWNXojDiim8rplIj1RPsCbuv7dsLECoXY8C6Cx158CMgl+O+QKW"
+      config={sentryConfig}
+      scope
+    >
+      <App />
+    </SentryProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

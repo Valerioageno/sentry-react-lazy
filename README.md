@@ -129,6 +129,25 @@ prop in the `<SentryProvider>`. Custom options must be passed as `tracingOptions
 It can be possible also create your [custom instrumentations](https://docs.sentry.io/platforms/javascript/performance/instrumentation/custom-instrumentation/)
 without donwload any other package.
 
+## Scope
+
+Unlike the original setup the class `new Sentry.Scope()` is already called so all its method are already binded inside the `Sentry.Scope` object.
+
+Check the example below:
+
+```javascript
+  const Sentry = useSentry()
+  
+  useEffect(() => {
+    const scope = Sentry.Scope
+    if(scope) {
+      scope.setTag("section", "articles");
+      Sentry.captureException(new Error("something went wrong"), scope);
+    }
+  }, [Sentry.Scope])
+
+```
+
 ## How to start contributing
 
 1. `git clone git@github.com:Valerioageno/sentry-react-lazy.git`
