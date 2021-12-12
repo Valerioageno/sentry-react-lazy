@@ -1,11 +1,10 @@
 # Sentry react lazy
 
 ![Package CI](https://github.com/Valerioageno/sentry-react-lazy/actions/workflows/main.yml/badge.svg)
+![ts](https://badgen.net/badge/-/TypeScript/blue?icon=typescript&label)
 
 This package create a `<script>` that loads the sentry CDN,
 initialize the service and share the SDK around the whole application using the [React Context API](https://reactjs.org/docs/context.html).
-
-Please refer to the original [documentation](https://docs.sentry.io/platforms/javascript/) for more information about the usage.
 
 ## ALERT
 
@@ -13,7 +12,7 @@ The project is currently under development and it has not pushed on [npm](https:
 
 ## Goal
 
-Enable a satisfying use of [sentry.io](https://sentry.io/welcome/) without load the
+Enable a satisfying use of [sentry.io](https://sentry.io/welcome/) with React avoiding the load of the
 entire bundle inside the application which weights about 90kb
 minified ([resources](https://bundlephobia.com/package/@sentry/react@6.15.0))
 
@@ -94,8 +93,6 @@ If you want report custom exeption it can be also possible use the following fun
 
 | method     | description      |
 | -------------------------- | -- |
-| `onLoad(callback)`         | execute the initialization after the CDN loading  |
-| `init(config)`             | configure the sentry setup as [doc](https://docs.sentry.io/platforms/javascript/configuration/) (not all fields are available) |
 | `captureMessage(msg)`  | capture a custom message    |
 | `captureException(err)`| capture the entire exception passing the Error object as argument   |
 | `configureScope(callback)`| set the level within the scope ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))|
@@ -136,17 +133,21 @@ Unlike the original setup the class `new Sentry.Scope()` is already called so al
 Check the example below:
 
 ```javascript
-  const Sentry = useSentry()
-  
-  useEffect(() => {
-    const scope = Sentry.Scope
-    if(scope) {
-      scope.setTag("section", "articles");
-      Sentry.captureException(new Error("something went wrong"), scope);
-    }
-  }, [Sentry.Scope])
+const Sentry = useSentry()
+
+useEffect(() => {
+  const scope = Sentry.Scope
+  if(scope) {
+    scope.setTag("section", "articles");
+    Sentry.captureException(new Error("something went wrong"), scope);
+  }
+}, [Sentry.Scope])
 
 ```
+
+## Caveats
+
+Please refer to the original [documentation](https://docs.sentry.io/platforms/javascript/) for more information about the usage.
 
 ## How to start contributing
 
