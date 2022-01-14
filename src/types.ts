@@ -1,6 +1,12 @@
-import type { Scope } from '@sentry/types'
-// TODO: check all "any" types
-export type Level =
+import type {
+  Scope,
+  EventHint,
+  Options,
+  TransactionContext,
+  Transaction
+} from '@sentry/types'
+
+export type SeverityLevels =
   | 'debug'
   | 'info'
   | 'warning'
@@ -11,57 +17,43 @@ export type Level =
 
 export interface TracingOptions {
   tracingOrigins?: string[]
-  // TODO: Check the exact types beforeNavigate()
-  beforeNavigate?: () => void
+  beforeNavigate?: (
+    context: TransactionContext
+  ) => TransactionContext | undefined
+  _metricOptions?: Partial<{ _reportAllChanges: boolean }>
   shouldCreateSpanForRequest?: () => void
   idleTimeout?: number
   startTransactionOnLocationChange?: boolean
   startTransactionOnPageLoad?: boolean
-  maxTransactionDuration?: boolean
+  maxTransactionDuration?: number
   markBackgroundTransactions?: boolean
-}
-
-interface ScopeObject extends Scope {
-  prototype: any
+  routingInstrumentation<T extends Transaction>(
+    customStartTransaction: (context: TransactionContext) => T | undefined,
+    startTransactionOnPageLoad?: boolean,
+    startTransactionOnLocationChange?: boolean
+  ): void
 }
 
 export interface SentryType {
-  onLoad: (callback: () => void) => void
-  init: (options: SentryConfigType) => void
-  captureMessage: (msg: string, lv?: any) => void
-  // TODO: Set the correct parameters for captureException
-  captureException: (err: any, lv?: any) => void
+  onLoad?: (callback: () => void) => void
+  init?: (options: Options) => void
+  captureMessage: (
+    message: string,
+    level?: SeverityLevels,
+    hint?: EventHint,
+    scope?: Scope
+  ) => string | undefined
+  captureException: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    exception: any,
+    hint?: EventHint,
+    scope?: Scope
+  ) => string | undefined
   configureScope: (callback: () => void) => void
-  Severity: { [key: string]: Level }
+  Severity: { [key: string]: SeverityLevels }
   withScope: (callback: () => void) => void
   Integrations: any
   // TODO: set the correct classes available
   setContext: (str: string, obj: { [k: string]: any }) => void
-  Scope: ScopeObject | undefined
-}
-
-export interface SentryConfigType {
-  dsn: string
-  debug: boolean
-  release: string
-  environment: string
-  tunnel?: string
-  sampleRate?: number
-  maxBreadcrumbs?: number
-  attachStacktrace?: string
-  denyUrls?: string[]
-  allowUrls?: string[]
-  autoSessionTracking?: boolean
-  initialScope?: { [key: string]: any }
-  maxValueLength?: number
-  normalizeDepth?: number
-  // TODO: Integration configurations - https://docs.sentry.io/platforms/javascript/configuration/options/#integration-configuration
-  integrations?: any
-  defaultIntegrations?: boolean
-
-  // TODO: Hooks - https://docs.sentry.io/platforms/javascript/configuration/options/#hooks
-
-  // TODO: transport - https://docs.sentry.io/platforms/javascript/configuration/options/#transport-options
-  tracesSampleRate?: number
-  tracesSampler?: () => void
+  Scope?: Scope & { prototype: any } & EventHint
 }

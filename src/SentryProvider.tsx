@@ -1,11 +1,6 @@
 import { createContext, useContext, useLayoutEffect, useState } from 'react'
-import { noop } from './helpers'
-import type {
-  SentryType,
-  Level,
-  SentryConfigType,
-  TracingOptions
-} from './types'
+import type { EventHint, Scope, Options } from '@sentry/types'
+import { SentryType, TracingOptions, SeverityLevels } from './types'
 
 declare global {
   interface Window {
@@ -17,22 +12,28 @@ declare global {
 }
 
 const SentryContext = createContext<SentryType>({
-  onLoad: noop,
-  init: noop,
-  captureMessage: noop,
-  captureException: noop,
-  configureScope: noop,
-  Severity: {},
-  withScope: noop,
+  captureMessage: window?.Sentry?.captureMessage,
+  captureException: window?.Sentry?.captureException,
+  configureScope: window?.Sentry?.configureScope,
+  Severity: {
+    Critical: 'critical',
+    Debug: 'debug',
+    Error: 'error',
+    Fatal: 'fatal',
+    Info: 'info',
+    Log: 'log',
+    Warning: 'warning'
+  },
+  withScope: window?.Sentry?.withScope,
   Integrations: {},
-  setContext: noop,
+  setContext: window?.Sentry?.setContext,
   Scope: undefined
 })
 
 interface ContextProps {
   children: JSX.Element
   url: string
-  config: SentryConfigType
+  config: Options
   integrity?: string
   performance?: boolean
   tracingOptions?: TracingOptions
@@ -48,12 +49,15 @@ export function SentryProvider({
   tracingOptions
 }: ContextProps): JSX.Element {
   const [Sentry, setSentry] = useState<SentryType>({
-    onLoad: (callback) => window?.Sentry?.onLoad(callback),
-    init: (options) => window?.Sentry?.init(options),
-    captureMessage: (msg, lv?: Level) =>
-      window?.Sentry?.captureMessage(msg, lv ?? 'warning'),
-    captureException: (err, lv?: Level) =>
-      window?.Sentry?.captureException(err, lv ?? 'warning'),
+    captureMessage: (
+      message: string,
+      level?: SeverityLevels,
+      hint?: EventHint,
+      scope?: Scope
+    ) => window?.Sentry?.captureMessage(message, level, hint, scope),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    captureException: (exception: any, hint?: EventHint, scope?: Scope) =>
+      window?.Sentry?.captureException(exception, hint, scope),
     configureScope: (callback) => window?.Sentry?.configureScope(callback),
     withScope: (callback) => window?.Sentry?.withScope(callback),
     Severity: {
@@ -105,7 +109,10 @@ export function SentryProvider({
           }
         }
         done = true
-        Sentry.onLoad(() => Sentry.init(config))
+        if (window?.Sentry?.onLoad)
+          window.Sentry.onLoad(
+            () => window?.Sentry?.init && window.Sentry.init(config)
+          )
         if (window.Sentry.Scope) {
           setSentry({
             ...Sentry,

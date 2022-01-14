@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { SentryProvider, SentryConfigType } from './component-lib'
+import { SentryProvider } from './component-lib'
 
-const sentryConfig: SentryConfigType = {
+const sentryConfig = {
   dsn: process.env.REACT_APP_SENTRY_DSN ?? '',
   debug: true,
   environment: 'development',
