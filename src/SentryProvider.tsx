@@ -75,6 +75,7 @@ export function SentryProvider({
     script.src = url
     script.crossOrigin = 'anonymous'
     script.type = 'application/javascript'
+    if (integrity) script.integrity = integrity
     const head = document.getElementsByTagName('head')[0]
     let done = false
 
@@ -116,7 +117,6 @@ export function SentryProvider({
 
     script.onload = checkLoadingAndRun
     script.onreadystatechange = checkLoadingAndRun
-    if (integrity) script.integrity = integrity
 
     head.appendChild(script)
     // eslint-disable-next-line react-hooks/exhaustive-deps
