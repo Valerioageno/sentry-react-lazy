@@ -16,8 +16,8 @@ export default [
         format: 'esm',
         banner: '/* eslint-disable */'
       },
-      { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'esm' }
+      { file: pkg.main, format: 'cjs', sourcemap: true, },
+      { file: pkg.module, format: 'esm', sourcemap: true, }
     ],
     plugins: [
       del({ targets: ['dist/*', 'playground/src/component-lib', 'playground-ts/src/component-lib'] }),

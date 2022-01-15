@@ -6,6 +6,16 @@ import type {
   Transaction
 } from '@sentry/types'
 
+export type ContextProps = {
+  children: JSX.Element
+  url: string
+  config: Options
+  integrity?: string
+  performance?: boolean
+  tracingOptions?: TracingOptions
+  scope?: boolean
+}
+
 export type SeverityLevels =
   | 'debug'
   | 'info'
@@ -15,7 +25,7 @@ export type SeverityLevels =
   | 'fatal'
   | 'critical'
 
-export interface TracingOptions {
+export type TracingOptions = {
   tracingOrigins?: string[]
   beforeNavigate?: (
     context: TransactionContext
@@ -27,14 +37,14 @@ export interface TracingOptions {
   startTransactionOnPageLoad?: boolean
   maxTransactionDuration?: number
   markBackgroundTransactions?: boolean
-  routingInstrumentation<T extends Transaction>(
+  routingInstrumentation?: <T extends Transaction>(
     customStartTransaction: (context: TransactionContext) => T | undefined,
     startTransactionOnPageLoad?: boolean,
     startTransactionOnLocationChange?: boolean
-  ): void
+  ) => void
 }
 
-export interface SentryType {
+export type SentryType = {
   onLoad?: (callback: () => void) => void
   init?: (options: Options) => void
   captureMessage: (
@@ -51,9 +61,11 @@ export interface SentryType {
   ) => string | undefined
   configureScope: (callback: () => void) => void
   Severity: { [key: string]: SeverityLevels }
-  withScope: (callback: () => void) => void
+  withScope: (callback: (scope: Scope) => void) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Integrations: any
-  // TODO: set the correct classes available
-  setContext: (str: string, obj: { [k: string]: any }) => void
-  Scope?: Scope & { prototype: any } & EventHint
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setContext: (name: string, context: { [key: string]: any } | null) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Scope?: Scope & { prototype: any }
 }

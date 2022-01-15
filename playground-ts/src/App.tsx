@@ -9,6 +9,8 @@ function App() {
   useEffect(() => {
     const scope = Sentry.Scope
     if (scope) {
+      console.log(scope)
+
       scope.setTag('menin', 'belin')
       Sentry.captureException('belin', scope)
     }

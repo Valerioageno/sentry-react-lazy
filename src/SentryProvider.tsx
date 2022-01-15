@@ -1,12 +1,6 @@
-import {
-  createContext,
-  ReactElement,
-  useContext,
-  useLayoutEffect,
-  useState
-} from 'react'
-import type { EventHint, Scope, Options } from '@sentry/types'
-import { SentryType, TracingOptions, SeverityLevels } from './types'
+import { createContext, useContext, useLayoutEffect, useState } from 'react'
+import type { EventHint, Scope } from '@sentry/types'
+import type { SentryType, ContextProps, SeverityLevels } from './types'
 
 declare global {
   interface Window {
@@ -18,9 +12,16 @@ declare global {
 }
 
 const SentryContext = createContext<SentryType>({
-  captureMessage: window?.Sentry?.captureMessage,
-  captureException: window?.Sentry?.captureException,
-  configureScope: window?.Sentry?.configureScope,
+  captureMessage: (
+    message: string,
+    level?: SeverityLevels,
+    hint?: EventHint,
+    scp?: Scope
+  ) => window?.Sentry?.captureMessage(message, level, hint, scp),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  captureException: (exception: any, hint?: EventHint, scp?: Scope) =>
+    window?.Sentry?.captureException(exception, hint, scp),
+  configureScope: (callback) => window?.Sentry?.configureScope(callback),
   Severity: {
     Critical: 'critical',
     Debug: 'debug',
@@ -30,21 +31,11 @@ const SentryContext = createContext<SentryType>({
     Log: 'log',
     Warning: 'warning'
   },
-  withScope: window?.Sentry?.withScope,
+  withScope: (callback) => window?.Sentry?.withScope(callback),
   Integrations: {},
-  setContext: window?.Sentry?.setContext,
+  setContext: (str, obj) => window?.Sentry?.setContext(str, obj),
   Scope: undefined
 })
-
-interface ContextProps {
-  children: ReactElement
-  url: string
-  config: Options
-  integrity?: string
-  performance?: boolean
-  tracingOptions?: TracingOptions
-  scope?: boolean
-}
 
 export function SentryProvider({
   children,
@@ -52,18 +43,19 @@ export function SentryProvider({
   config,
   integrity,
   performance = false,
-  tracingOptions
-}: ContextProps) {
+  tracingOptions,
+  scope
+}: ContextProps): JSX.Element {
   const [Sentry, setSentry] = useState<SentryType>({
     captureMessage: (
       message: string,
       level?: SeverityLevels,
       hint?: EventHint,
-      scope?: Scope
-    ) => window?.Sentry?.captureMessage(message, level, hint, scope),
+      scp?: Scope
+    ) => window?.Sentry?.captureMessage(message, level, hint, scp),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    captureException: (exception: any, hint?: EventHint, scope?: Scope) =>
-      window?.Sentry?.captureException(exception, hint, scope),
+    captureException: (exception: any, hint?: EventHint, scp?: Scope) =>
+      window?.Sentry?.captureException(exception, hint, scp),
     configureScope: (callback) => window?.Sentry?.configureScope(callback),
     withScope: (callback) => window?.Sentry?.withScope(callback),
     Severity: {
@@ -120,7 +112,7 @@ export function SentryProvider({
           window.Sentry.onLoad(
             () => window?.Sentry?.init && window.Sentry.init(config)
           )
-        if (window.Sentry.Scope) {
+        if (scope && window?.Sentry.Scope) {
           setSentry({
             ...Sentry,
             Scope: new window.Sentry.Scope.prototype.constructor()
