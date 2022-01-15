@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  build:
 
     runs-on: ubuntu-latest
       
@@ -27,16 +27,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         
     - name: Install dependencies
-      run: npm install
+      run: npm ci
       
     - name: Build project
       run: npm run build
 
-    # And create some tests
-    - name: Perform tests
-      run: npm test
-
-  check-lint-format:
+  check-lint-format-test:
     runs-on: ubuntu-20.04
 
     steps:    
@@ -60,3 +56,6 @@ jobs:
 
     - name: Markdownlint
       run: npm run markdownlint
+
+    - name: Perform tests
+      run: npm run test

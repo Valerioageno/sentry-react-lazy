@@ -1,4 +1,10 @@
-import { createContext, useContext, useLayoutEffect, useState } from 'react'
+import {
+  createContext,
+  ReactElement,
+  useContext,
+  useLayoutEffect,
+  useState
+} from 'react'
 import type { EventHint, Scope, Options } from '@sentry/types'
 import { SentryType, TracingOptions, SeverityLevels } from './types'
 
@@ -31,7 +37,7 @@ const SentryContext = createContext<SentryType>({
 })
 
 interface ContextProps {
-  children: JSX.Element
+  children: ReactElement
   url: string
   config: Options
   integrity?: string
@@ -47,7 +53,7 @@ export function SentryProvider({
   integrity,
   performance = false,
   tracingOptions
-}: ContextProps): JSX.Element {
+}: ContextProps) {
   const [Sentry, setSentry] = useState<SentryType>({
     captureMessage: (
       message: string,
@@ -79,6 +85,7 @@ export function SentryProvider({
     script.src = url
     script.crossOrigin = 'anonymous'
     script.type = 'application/javascript'
+    script.dataset.testid = 'sentry'
     if (integrity) script.integrity = integrity
     const head = document.getElementsByTagName('head')[0]
     let done = false
