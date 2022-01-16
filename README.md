@@ -3,7 +3,7 @@
 ![Package CI](https://github.com/Valerioageno/sentry-react-lazy/actions/workflows/main.yml/badge.svg)
 ![ts](https://badgen.net/badge/-/TypeScript/blue?icon=typescript&label)
 
-This package create a `<script>` that loads the sentry CDN,
+This package create a `<script>` tag that loads the sentry CDN,
 initialize the service and share the SDK around the whole application using the [React Context API](https://reactjs.org/docs/context.html).
 
 ## Goal
@@ -12,7 +12,7 @@ Enable a satisfying use of [sentry.io](https://sentry.io/welcome/) with React av
 entire bundle inside the application which weights about 90kb
 minified ([resources](https://bundlephobia.com/package/@sentry/react@6.15.0))
 
-## Using
+## Usage
 
 Install the dependencie
 

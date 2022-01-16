@@ -1,6 +1,6 @@
 {
   "name": "sentry-react-lazy",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Load sentry monitoring system lazily on react appications",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
