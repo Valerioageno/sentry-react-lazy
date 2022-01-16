@@ -99,6 +99,8 @@ If you want report custom exeption it can be also possible use the following fun
 | `withScope(callback)` | override the default level within the event ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/)) |
 | `setContext(str, obj)` | set a custom context to the exception captured |
 | `setUser(user)` | identify the session user |
+| `setTag(name, value)` | customize the issue with a custom tag |
+| `addBreadcrumb(breadcrumb, maxBreadcrumb)` | add custom data to issue |
 
 Those functions also take as optional argument the scope of the error. ([doc](https://docs.sentry.io/platforms/javascript/usage/set-level/))
 

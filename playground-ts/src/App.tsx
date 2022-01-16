@@ -1,26 +1,18 @@
-import { useEffect } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import { useSentry } from './component-lib'
+import { Severity } from '@sentry/types'
 
 function App() {
   const Sentry = useSentry()
 
-  // useEffect(() => {
-  //   const scope = Sentry.Scope
-  //   if (scope) {
-  //     console.log(scope)
+  Sentry.addBreadcrumb({
+    type: 'test',
+    level: Severity.Fatal,
+    category: 'test'
+  })
 
-  //     scope.setTag('menin', 'belin')
-  //     Sentry.captureException('belin', scope)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [Sentry.Scope])
-
-  useEffect(() => {
-    Sentry.setUser({ id: '1', username: 'valerio' })
-    Sentry.captureMessage('with username')
-  }, [])
+  Sentry.captureMessage('custom breadcrumbs')
 
   return (
     <div className="App">

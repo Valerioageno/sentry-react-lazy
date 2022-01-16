@@ -4,7 +4,9 @@ import type {
   Options,
   TransactionContext,
   Transaction,
-  User
+  User,
+  Primitive,
+  Breadcrumb
 } from '@sentry/types'
 
 export type ContextProps = {
@@ -68,6 +70,8 @@ export type SentryType = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setContext: (name: string, context: { [key: string]: any } | null) => void
   setUser: (user: User) => void
+  setTag: (key: string, value: Primitive) => void
+  addBreadcrumb: (breadcrumb: Breadcrumb, maxBreadcrumbs?: number) => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Scope?: Scope & { prototype: any } & EventHint
 }
