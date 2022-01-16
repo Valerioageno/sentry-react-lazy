@@ -6,10 +6,6 @@
 This package create a `<script>` that loads the sentry CDN,
 initialize the service and share the SDK around the whole application using the [React Context API](https://reactjs.org/docs/context.html).
 
-## ALERT
-
-The project is currently under development and it has not pushed on [npm](https://www.npmjs.com/) yet.
-
 ## Goal
 
 Enable a satisfying use of [sentry.io](https://sentry.io/welcome/) with React avoiding the load of the
