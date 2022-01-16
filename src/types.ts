@@ -62,7 +62,7 @@ export type SentryType = {
     hint?: EventHint,
     scope?: Scope
   ) => string | undefined
-  configureScope: (callback: () => void) => void
+  configureScope: (callback: (scope: Scope) => void) => void
   Severity: { [key: string]: SeverityLevels }
   withScope: (callback: (scope: Scope) => void) => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

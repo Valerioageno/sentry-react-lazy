@@ -1,5 +1,5 @@
 import { createContext, useContext, useLayoutEffect, useState } from 'react'
-import type { SentryType, ContextProps } from './types'
+import { SentryType, ContextProps } from './types'
 
 declare global {
   interface Window {

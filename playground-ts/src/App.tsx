@@ -2,17 +2,44 @@ import logo from './logo.svg'
 import './App.css'
 import { useSentry } from './component-lib'
 import { Severity } from '@sentry/types'
+import { useEffect } from 'react'
 
 function App() {
   const Sentry = useSentry()
 
-  Sentry.addBreadcrumb({
-    type: 'test',
-    level: Severity.Fatal,
-    category: 'test'
-  })
+  // Mega request
+  useEffect(() => {
+    if (Sentry.Scope) {
+      Sentry.setContext('character', {
+        name: 'Mighty Fighter',
+        age: 19,
+        attack_type: 'melee'
+      })
 
-  Sentry.captureMessage('custom breadcrumbs')
+      Sentry.setUser({
+        id: 'id000',
+        username: 'sentry'
+      })
+
+      Sentry.setTag('customTag', 'testTag')
+
+      Sentry.addBreadcrumb({
+        type: 'test',
+        level: Severity.Fatal,
+        category: 'test'
+      })
+
+      Sentry.configureScope((scope) => scope.setTransactionName('UserListView'))
+
+      Sentry.Scope.setTags({
+        section: 'articles',
+        category: 'post'
+      })
+
+      // Sentry.captureMessage('custom message')
+      Sentry.captureException(new Error('something went wrong'), Sentry.Scope)
+    }
+  }, [Sentry.Scope])
 
   return (
     <div className="App">
