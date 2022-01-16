@@ -5,6 +5,9 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
   "homepage": "http://Valerioageno.github.io/sentry-react-lazy",
   "author": "V. Ageno <valerioageno@yahoo.it>",
   "license": "MIT",
