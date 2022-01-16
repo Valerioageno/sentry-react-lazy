@@ -3,7 +3,8 @@ import type {
   EventHint,
   Options,
   TransactionContext,
-  Transaction
+  Transaction,
+  User
 } from '@sentry/types'
 
 export type ContextProps = {
@@ -66,6 +67,7 @@ export type SentryType = {
   Integrations: any
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setContext: (name: string, context: { [key: string]: any } | null) => void
+  setUser: (user: User) => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Scope?: Scope & { prototype: any }
+  Scope?: Scope & { prototype: any } & EventHint
 }

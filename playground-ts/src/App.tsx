@@ -6,16 +6,22 @@ import { useSentry } from './component-lib'
 function App() {
   const Sentry = useSentry()
 
-  useEffect(() => {
-    const scope = Sentry.Scope
-    if (scope) {
-      console.log(scope)
+  // useEffect(() => {
+  //   const scope = Sentry.Scope
+  //   if (scope) {
+  //     console.log(scope)
 
-      scope.setTag('menin', 'belin')
-      Sentry.captureException('belin', scope)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Sentry.Scope])
+  //     scope.setTag('menin', 'belin')
+  //     Sentry.captureException('belin', scope)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [Sentry.Scope])
+
+  useEffect(() => {
+    Sentry.setUser({ id: '1', username: 'valerio' })
+    Sentry.captureMessage('with username')
+  }, [])
+
   return (
     <div className="App">
       <header className="App-header">

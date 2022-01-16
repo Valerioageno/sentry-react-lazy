@@ -1,5 +1,5 @@
 import { createContext, useContext, useLayoutEffect, useState } from 'react'
-import type { EventHint, Scope } from '@sentry/types'
+import type { EventHint, Scope, User } from '@sentry/types'
 import type { SentryType, ContextProps, SeverityLevels } from './types'
 
 declare global {
@@ -12,14 +12,10 @@ declare global {
 }
 
 const SentryContext = createContext<SentryType>({
-  captureMessage: (
-    message: string,
-    level?: SeverityLevels,
-    hint?: EventHint,
-    scp?: Scope
-  ) => window?.Sentry?.captureMessage(message, level, hint, scp),
+  captureMessage: (message, level?, hint?, scp?) =>
+    window?.Sentry?.captureMessage(message, level, hint, scp),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  captureException: (exception: any, hint?: EventHint, scp?: Scope) =>
+  captureException: (exception, hint?, scp?) =>
     window?.Sentry?.captureException(exception, hint, scp),
   configureScope: (callback) => window?.Sentry?.configureScope(callback),
   Severity: {
@@ -34,6 +30,7 @@ const SentryContext = createContext<SentryType>({
   withScope: (callback) => window?.Sentry?.withScope(callback),
   Integrations: {},
   setContext: (str, obj) => window?.Sentry?.setContext(str, obj),
+  setUser: (user) => window?.Sentry?.setUser(user),
   Scope: undefined
 })
 
@@ -69,6 +66,7 @@ export function SentryProvider({
     },
     Integrations: {},
     setContext: (str, obj) => window?.Sentry?.setContext(str, obj),
+    setUser: (user: User) => window?.Sentry?.setUser(user),
     Scope: undefined
   })
 
