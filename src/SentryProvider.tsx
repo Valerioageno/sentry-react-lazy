@@ -1,4 +1,4 @@
-import { createContext, useContext, useLayoutEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { SentryType, ContextProps } from './types'
 
 declare global {
@@ -68,7 +68,7 @@ export function SentryProvider({
     Scope: undefined
   })
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const script: HTMLScriptElement = document.createElement('script')
     script.src = url
     script.crossOrigin = 'anonymous'
