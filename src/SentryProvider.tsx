@@ -69,58 +69,62 @@ export function SentryProvider({
   })
 
   useEffect(() => {
-    const script: HTMLScriptElement = document.createElement('script')
-    script.src = url
-    script.crossOrigin = 'anonymous'
-    script.type = 'application/javascript'
-    script.dataset.testid = 'sentry'
-    if (integrity) script.integrity = integrity
-    const head = document.getElementsByTagName('head')[0]
-    let done = false
+    if (typeof document !== 'undefined') {
+      const script: HTMLScriptElement = document.createElement('script')
+      script.src = url
+      script.crossOrigin = 'anonymous'
+      script.type = 'application/javascript'
+      script.dataset.testid = 'sentry'
+      if (integrity) script.integrity = integrity
+      const head = document.getElementsByTagName('head')[0]
+      let done = false
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    function checkLoadingAndRun(this: any) {
-      if (
-        !done &&
-        (!this.readyState ||
-          this.readyState === 'loaded' ||
-          this.readyState === 'complete')
-      ) {
-        if (performance) {
-          if (window.Sentry.Integrations.BrowserTracing) {
-            const BrowserTracing =
-              new window.Sentry.Integrations.BrowserTracing.prototype.constructor(
-                tracingOptions
-              )
-            // eslint-disable-next-line no-param-reassign
-            config.integrations = [BrowserTracing]
-          } else {
-            // eslint-disable-next-line no-lonely-if
-            if (config.debug) {
-              console.warn(
-                "The performance integration needs the right CDN. Please check https://docs.sentry.io/platforms/javascript/install/cdn/#performance-bundle. Performance won't be analyzed."
-              )
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-inner-declarations
+      function checkLoadingAndRun(this: any) {
+        if (
+          !done &&
+          typeof window !== 'undefined' &&
+          (!this.readyState ||
+            this.readyState === 'loaded' ||
+            this.readyState === 'complete')
+        ) {
+          if (performance) {
+            if (window.Sentry.Integrations.BrowserTracing) {
+              const BrowserTracing =
+                new window.Sentry.Integrations.BrowserTracing.prototype.constructor(
+                  tracingOptions
+                )
+              // eslint-disable-next-line no-param-reassign
+              config.integrations = [BrowserTracing]
+            } else {
+              // eslint-disable-next-line no-lonely-if
+              if (config.debug) {
+                console.warn(
+                  "The performance integration needs the right CDN. Please check https://docs.sentry.io/platforms/javascript/install/cdn/#performance-bundle. Performance won't be analyzed."
+                )
+              }
             }
           }
-        }
-        done = true
-        if (window?.Sentry?.onLoad)
-          window.Sentry.onLoad(
-            () => window?.Sentry?.init && window.Sentry.init(config)
-          )
-        if (scope && window?.Sentry.Scope) {
-          setSentry({
-            ...Sentry,
-            Scope: new window.Sentry.Scope.prototype.constructor()
-          })
+          done = true
+          if (window?.Sentry?.onLoad)
+            window.Sentry.onLoad(
+              () => window?.Sentry?.init && window.Sentry.init(config)
+            )
+          if (scope && window?.Sentry.Scope) {
+            setSentry({
+              ...Sentry,
+              Scope: new window.Sentry.Scope.prototype.constructor()
+            })
+          }
         }
       }
+
+      script.onload = checkLoadingAndRun
+      script.onreadystatechange = checkLoadingAndRun
+
+      head.appendChild(script)
     }
 
-    script.onload = checkLoadingAndRun
-    script.onreadystatechange = checkLoadingAndRun
-
-    head.appendChild(script)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config])
 
