@@ -1,3 +1,6 @@
+## ! Archived
+This project is archived since the official sentry react library has achieved a good level of tree-shaking.
+
 # Sentry react lazy
 
 ![Package CI](https://github.com/Valerioageno/sentry-react-lazy/actions/workflows/main.yml/badge.svg)
